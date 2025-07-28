@@ -16,252 +16,49 @@ import { Button } from "@/components/ui/button";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FooterSection from "@/components/sections/FooterSection";
 
-// Tour data matching the Figma designs
-const tourData = {
-  "lucca-bike-tour": {
-    title: "Lucca Bike Tour",
-    price: "34 €",
-    description:
-      "A tour of the city and its surroundings led by a professional guide. Experience the beauty of Lucca from a unique perspective as you cycle through historic streets and scenic countryside.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/e649aa3470f40e4fc3ad4108bc8f0e32f7738d84?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1544191696-15693072b5a8?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1595746028010-4b9d1ddb5e75?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "3-10",
-      duration: "4 hours",
-      location: "Lucca",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bicycle",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1544191696-15693072b5a8?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1595746028010-4b9d1ddb5e75?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1544378156-207b5ac50748?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "wine-tasting-tuscany": {
-    title: "Wine tasting In Tuscany",
-    price: "34 €",
-    description:
-      "The real magic is here where you can enjoy the best Tuscan wine and eat traditional local food. Experience the finest wines from local vineyards in the heart of Tuscany.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/68ff1ed6c96f21fd0cfc7c092f07678e106a61ae?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1567111278842-e546dd3c69b1?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1558346648-9757f999aba8?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "10-30",
-      duration: "6 hours",
-      location: "Tuscany",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1567111278842-e546dd3c69b1?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1558346648-9757f999aba8?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "cinque-terre-tour": {
-    title: "Cinque Terre Tour",
-    price: "34 €",
-    description:
-      "Visiting the 5 Terre is a must, and you can never go there enough. Discover the stunning coastal villages and breathtaking landscapes of this UNESCO World Heritage site.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/41cd603110d876cbb13464c4a817509ce08de13c?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1551376347-075b0121a65b?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "10-50",
-      duration: "15 hours and 45 minutes",
-      location: "Cinque Terre",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1551376347-075b0121a65b?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "siena-surroundings": {
-    title: "Siena and Surroundings",
-    price: "34 €",
-    description:
-      "Visit the beautiful Siena and the cities that surround it to experience authentic Tuscan culture and medieval architecture in its finest form.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/a77e402c8a702f4b15cc1474039e41539823dfb2?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1593786275148-2d39a511e9bd?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1591797442444-039f23ddcc14?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1559113315-6e4e3c58d48f?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "5-10",
-      duration: "8 hours",
-      location: "Siena",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1593786275148-2d39a511e9bd?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1591797442444-039f23ddcc14?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1559113315-6e4e3c58d48f?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1592926471399-c7d7c55f45df?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "tour-lucca-hills": {
-    title: "Tour of the Lucca Hills",
-    price: "34 €",
-    description:
-      "Visit with us the beautiful hills of Lucca, with a guide who will make you discover hidden gems and panoramic viewpoints in the Tuscan countryside.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/26860b3914eb8c32a4215496857371a56fd8ac2f?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1595746028010-4b9d1ddb5e75?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1544378156-207b5ac50748?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1541892395-1bb2470a2e6b?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "5-12",
-      duration: "6 hours",
-      location: "Lucca Hills",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1595746028010-4b9d1ddb5e75?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1544378156-207b5ac50748?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1541892395-1bb2470a2e6b?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1544191696-15693072b5a8?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "gardaland-verona": {
-    title: "Gardaland, Verona",
-    price: "34 €",
-    description:
-      "Visit the largest and most fun park in Italy suitable for all ages. Experience thrilling rides and attractions in this world-class amusement park.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/6f77270fd39b3d7a49c1a62f8f487b2c3591cb6b?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1509207039741-94d4ac1da6b4?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1566737236500-c8ac43014a8e?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "10-50",
-      duration: "Full day",
-      location: "Verona",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1509207039741-94d4ac1da6b4?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1566737236500-c8ac43014a8e?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1605538883669-825200433431?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  "pisa-lucca": {
-    title: "Pisa & Lucca",
-    price: "34 €",
-    description:
-      "Discover two of Tuscany's most iconic cities in one unforgettable tour. From the famous Leaning Tower to the medieval walls of Lucca.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/55587f715aed85c3394a2517b88d6af020d04bd6?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1564073308089-62ad19ba2d0c?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1543572326-24fad7e4b5e0?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "10-50",
-      duration: "10 hours",
-      location: "Pisa & Lucca",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1564073308089-62ad19ba2d0c?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1543572326-24fad7e4b5e0?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1580041078462-f2e70bb0f6b9?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-  florence: {
-    title: "Florence",
-    price: "34 €",
-    description:
-      "Explore the cradle of the Renaissance. Visit world-famous museums, see masterpieces by Michelangelo and discover the beauty of this historic city.",
-    mainImage:
-      "https://cdn.builder.io/api/v1/image/assets/TEMP/07ef39d71d6015d02ef7c5849bcfc9231d35ecfa?width=1400",
-    thumbnails: [
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1569330330706-ef3ea9ea0b82?w=220&h=141&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1570969790411-6ad46e0e0fb6?w=220&h=141&fit=crop&crop=center",
-    ],
-    details: {
-      groupSize: "5-10",
-      duration: "8 hours",
-      location: "Florence",
-      guideService: "Included",
-      language: "English, Italian",
-      entryFees: "Museum fees not included",
-      transportation: "Bus",
-    },
-    galleryImages: [
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=700&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1569330330706-ef3ea9ea0b82?w=340&h=242&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1570969790411-6ad46e0e0fb6?w=340&h=506&fit=crop&crop=center",
-      "https://images.unsplash.com/photo-1589721931527-87f68d2b80cc?w=340&h=242&fit=crop&crop=center",
-    ],
-  },
-};
-
 const TourDetail = () => {
   const { tourId } = useParams();
   const navigate = useNavigate();
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
 
-  const tour = tourData[tourId as keyof typeof tourData];
+  const [tour, setTour] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
   useEffect(() => {
-    if (!tour) {
+    if (!tourId) {
       navigate("/404");
+      return;
     }
-  }, [tour, navigate]);
+
+    setLoading(true);
+    fetch(`http://localhost:8080/api/tours/slug/${tourId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Tour not found");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setTour(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        navigate("/404");
+      });
+  }, [tourId, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl text-gray-700">Loading...</p>
+      </div>
+    );
+  }
 
   if (!tour) {
-    return null;
+    return null; // ou un message d’erreur personnalisé
   }
 
   const handleBackClick = () => {
@@ -291,7 +88,7 @@ const TourDetail = () => {
               src={
                 mainImageIndex === 0
                   ? tour.mainImage
-                  : tour.thumbnails[mainImageIndex - 1]
+                  : tour.thumbnails?.[mainImageIndex - 1]
               }
               alt={tour.title}
               className="w-full h-[400px] lg:h-[600px] object-cover rounded-xl"
@@ -309,7 +106,7 @@ const TourDetail = () => {
                 }`}
                 onClick={() => setMainImageIndex(0)}
               />
-              {tour.thumbnails.map((thumb, index) => (
+              {tour.thumbnails?.map((thumb: string, index: number) => (
                 <img
                   key={index}
                   src={thumb}
@@ -511,7 +308,7 @@ const TourDetail = () => {
                 <Users className="w-6 h-6 text-orange-500 flex-shrink-0" />
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Number of group:</span>{" "}
-                  {tour.details.groupSize}
+                  {tour.details?.groupSize}
                 </span>
               </div>
 
@@ -519,7 +316,7 @@ const TourDetail = () => {
                 <Clock className="w-6 h-6 text-orange-500 flex-shrink-0" />
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Duration:</span>{" "}
-                  {tour.details.duration}
+                  {tour.details?.duration}
                 </span>
               </div>
 
@@ -529,7 +326,7 @@ const TourDetail = () => {
                   <span className="font-bold">
                     Departuring and arriving areas:
                   </span>{" "}
-                  {tour.details.location}
+                  {tour.details?.location}
                 </span>
               </div>
 
@@ -541,7 +338,7 @@ const TourDetail = () => {
                 </div>
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Guide service:</span>{" "}
-                  {tour.details.guideService}
+                  {tour.details?.guideService}
                 </span>
               </div>
 
@@ -549,7 +346,7 @@ const TourDetail = () => {
                 <Globe className="w-6 h-6 text-orange-500 flex-shrink-0" />
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Language:</span>{" "}
-                  {tour.details.language}
+                  {tour.details?.language}
                 </span>
               </div>
 
@@ -557,7 +354,7 @@ const TourDetail = () => {
                 <Ticket className="w-6 h-6 text-orange-500 opacity-80 flex-shrink-0" />
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Entry Fees:</span>{" "}
-                  {tour.details.entryFees}
+                  {tour.details?.entryFees}
                 </span>
               </div>
 
@@ -565,7 +362,7 @@ const TourDetail = () => {
                 <Bus className="w-6 h-6 text-orange-500 opacity-80 flex-shrink-0" />
                 <span className="text-lg text-gray-800">
                   <span className="font-bold">Transportation:</span>{" "}
-                  {tour.details.transportation}
+                  {tour.details?.transportation}
                 </span>
               </div>
             </div>
@@ -592,12 +389,14 @@ const TourDetail = () => {
             </div>
           </div>
 
+
+
           {/* Gallery Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] gap-5">
             {/* Large Image */}
             <div className="lg:row-span-2">
               <img
-                src={tour.galleryImages[0]}
+                src={tour.gallery[0]?.imageUrl}
                 alt="Gallery main image"
                 className="w-full h-[300px] lg:h-[506px] object-cover rounded-xl"
               />
@@ -606,7 +405,7 @@ const TourDetail = () => {
             {/* Top Right Image */}
             <div>
               <img
-                src={tour.galleryImages[1]}
+                src={tour.gallery[1]?.imageUrl}
                 alt="Gallery image 2"
                 className="w-full h-[180px] lg:h-[242px] object-cover rounded-xl"
               />
@@ -615,7 +414,7 @@ const TourDetail = () => {
             {/* Far Right Image - Full Height */}
             <div className="lg:row-span-2">
               <img
-                src={tour.galleryImages[2]}
+                src={tour.gallery[2]?.imageUrl}
                 alt="Gallery image 3"
                 className="w-full h-[300px] lg:h-[506px] object-cover rounded-xl"
               />
@@ -624,7 +423,7 @@ const TourDetail = () => {
             {/* Bottom Right Image */}
             <div>
               <img
-                src={tour.galleryImages[3]}
+                src={tour.gallery[3]?.imageUrl}
                 alt="Gallery image 4"
                 className="w-full h-[180px] lg:h-[242px] object-cover rounded-xl"
               />

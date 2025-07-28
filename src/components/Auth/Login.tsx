@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, X } from "lucide-react";
 import React, { useState } from "react";
+import SocialLoginButtons from "./SocialLoginButtons";
 
 const Login = ({
   onClose,
@@ -92,16 +93,7 @@ const Login = ({
         >
           {isLoading ? "Signing In..." : "Sign In"}
         </Button>
-        <div className="font-open-sans text-base text-[#333] opacity-40">
-          or
-        </div>
-        <Button
-          variant="outline"
-          className="w-full border border-[rgba(51,51,51,0.2)] bg-white text-[#333] font-open-sans text-lg font-semibold py-2.5 px-6 rounded-full opacity-40 flex items-center gap-2"
-        >
-          {/* Google SVG here */}
-          Sign In with Google
-        </Button>
+        <SocialLoginButtons mode="login" />
       </div>
       <div className="font-open-sans text-base text-[#333]">
         Don't have an account ?{" "}

@@ -24,6 +24,12 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signup: (name: string, email: string, password: string) => Promise<void>;
+  socialLogin: (
+    provider: "google" | "facebook" | "github",
+    token: string,
+  ) => Promise<void>;
+  setIsAdmin: (isAdmin: boolean) => void;
+  setToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,6 +50,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const setToken = (token: string) => {
+    localStorage.setItem("JWT_TOKEN", token);
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  };
+
+  const setIsAdmin = (isAdmin: boolean) => {
+    setUser((prevUser) =>
+      prevUser ? { ...prevUser, role: isAdmin ? "admin" : "user" } : null,
+    );
+  };
+
   const fetchUser = async () => {
     try {
       const { data } = await api.get("/auth/user");
@@ -59,39 +76,41 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.error("Failed to fetch user", error);
       setUser(null);
       toast.error("Failed to fetch user");
+    } finally {
+      setIsLoading(false); // <-- Assure que loading finit même en cas d'erreur
     }
   };
   
+  
+
   useEffect(() => {
     const token = localStorage.getItem("JWT_TOKEN");
     if (token) {
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      fetchUser().finally(() => setIsLoading(false));
+      setToken(token);
+      fetchUser();
     } else {
-      setIsLoading(false);
+      setIsLoading(false);  // <-- Important, sinon loading ne finit jamais !
     }
   }, []);
   
-
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await api.post("auth/public/signin", { email, password });
-      const { jwtToken } = response.data; // <-- ici, extraire jwtToken
-      localStorage.setItem("JWT_TOKEN", jwtToken);
-      api.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
-      
+      const response = await api.post("auth/public/signin", {
+        email,
+        password,
+      });
+      const { jwtToken } = response.data;
+      setToken(jwtToken);
       await fetchUser();
       toast.success("Login successful");
     } catch (error) {
       toast.error("Login failed");
       console.error(error);
       throw new Error("Login failed");
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
-  
+
   const signup = async (username: string, email: string, password: string) => {
     setIsLoading(true);
     try {
@@ -105,15 +124,42 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       toast.success("Signup successful");
     } catch (error) {
       toast.error("Signup failed");
+      console.error(error);
       throw new Error("Signup failed");
     } finally {
       setIsLoading(false);
     }
   };
-  
+
+  const socialLogin = async (
+    provider: "google" | "facebook" | "github",
+    token: string,
+  ) => {
+    setIsLoading(true);
+    try {
+      const response = await api.post(`auth/public/oauth/${provider}`, {
+        token,
+      });
+      const { jwtToken } = response.data;
+      setToken(jwtToken);
+      await fetchUser();
+      toast.success(
+        `${provider.charAt(0).toUpperCase() + provider.slice(1)} login successful`,
+      );
+    } catch (error) {
+      toast.error(
+        `${provider.charAt(0).toUpperCase() + provider.slice(1)} login failed`,
+      );
+      console.error(error);
+      throw new Error(
+        `${provider.charAt(0).toUpperCase() + provider.slice(1)} login failed`,
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const logout = () => {
-    localStorage.removeItem("user");
     localStorage.removeItem("JWT_TOKEN");
     localStorage.removeItem("IS_ADMIN");
     localStorage.removeItem("CSRF_TOKEN");
@@ -121,7 +167,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     toast.success("Logged out");
   };
 
-  const value = {
+  const value: AuthContextType = {
     user,
     isAuthenticated: !!user,
     isAdmin: user?.role === "admin",
@@ -129,6 +175,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     logout,
     signup,
+    socialLogin,
+    setIsAdmin,
+    setToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

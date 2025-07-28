@@ -27,6 +27,7 @@ import SupportManagement from "./pages/admin/SupportManagement";
 
 import AdminApp from "./AdminApp";
 import AuthModalPage from "./pages/AuthModalPage";
+import OAuth2RedirectHandler from "./components/Auth/OAuth2RedirectHandler";
 
 const queryClient = new QueryClient();
 
@@ -43,14 +44,22 @@ const App = () => (
 );
 
 const AdminRouteHandler = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isLoading, isAuthenticated, isAdmin } = useAuth();
 
-  // If user is authenticated as admin, show admin app
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   if (isAuthenticated && isAdmin) {
     return <AdminApp />;
   }
 
-  // Otherwise show public app
+
+  // Sinon afficher les routes publiques
   return (
     <BrowserRouter>
       <Routes>
@@ -78,9 +87,12 @@ const AdminRouteHandler = () => {
             </ProtectedRoute>
           }
         />
-        {/* Redirect admin routes to login */}
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+
+        {/* Rediriger les routes admin vers la page publique si non admin */}
         <Route path="/admin/*" element={<Index />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+        {/* Catch-all pour 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

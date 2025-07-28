@@ -1,13 +1,29 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios"; // Import Axios for making API requests
 
 interface TourGalleryProps {
-  images: string[];
+  tourId: string; // You will pass the tour ID to fetch the gallery images
 }
 
-const TourGallery = ({ images }: TourGalleryProps) => {
+const TourGallery = ({ tourId }: TourGalleryProps) => {
+  const [images, setImages] = useState<string[]>([]); // Store gallery images
   const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const response = await axios.get(`/api/tours/${tourId}/gallery`);
+        setImages(response.data); // Assuming API returns an array of image URLs
+      } catch (error) {
+        console.error("Error fetching gallery images", error);
+      }
+    };
+
+    fetchGalleryImages();
+  }, [tourId]); // Fetch gallery when the component mounts or tourId changes
+
   return (
     <div className="mb-[50px] lg:mb-[98px]">
       {/* Gallery Header */}
