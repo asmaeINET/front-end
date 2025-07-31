@@ -14,6 +14,7 @@ import BookingDetails from "./pages/BookingDetails";
 import Payment from "./pages/Payment";
 import OrderComplete from "./pages/OrderComplete";
 import Account from "./pages/Account";
+import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import NotFound from "./pages/NotFound";
 
@@ -84,6 +85,14 @@ const AdminRouteHandler = () => {
           element={
             <ProtectedRoute>
               <Account />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
