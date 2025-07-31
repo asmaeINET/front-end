@@ -10,6 +10,7 @@ import {
   MessageSquare,
   LogOut,
   Package,
+  User,
 } from "lucide-react";
 
 const sidebarItems = [
