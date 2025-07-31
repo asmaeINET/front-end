@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Ticket, LogOut, Menu, X, Settings } from "lucide-react";
+import { Ticket, LogOut, Menu, X, Settings, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
