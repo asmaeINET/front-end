@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updateProfile, changePassword } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   
