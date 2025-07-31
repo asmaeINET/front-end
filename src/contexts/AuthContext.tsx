@@ -28,6 +28,8 @@ interface AuthContextType {
     provider: "google" | "facebook" | "github",
     token: string,
   ) => Promise<void>;
+  updateProfile: (data: Partial<User>) => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   setIsAdmin: (isAdmin: boolean) => void;
   setToken: (token: string) => void;
 }
