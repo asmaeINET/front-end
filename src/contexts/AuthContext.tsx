@@ -212,6 +212,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     signup,
     socialLogin,
+    updateProfile,
+    changePassword,
     setIsAdmin,
     setToken,
   };
