@@ -58,14 +58,16 @@ const AdminProfile = () => {
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      // TODO: API call to update profile
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      toast.success("Profile updated successfully!");
+      await updateProfile({
+        name: profileData.name,
+        email: profileData.email,
+        avatar: profileData.avatar,
+      });
       setIsEditing(false);
     } catch (error) {
-      toast.error("Failed to update profile");
+      // Error handling is done in the context
     } finally {
       setLoading(false);
     }
