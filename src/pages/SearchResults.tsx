@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/sections/Header";
 import TourCard from "@/components/TourCard";
 import FooterSection from "@/components/sections/FooterSection";
+import EmptyState from "@/components/EmptyState";
 import axios from "axios";
 
 interface TourDetails {
