@@ -87,6 +87,7 @@ const AuthModal = ({
         setTimeout(() => {
           onModalTypeChange("signup");
           setError(""); // Clear error when switching to signup
+          // Email is already preserved in state, no need to reset it
         }, 3000);
       } else if (error.message === "INVALID_CREDENTIALS") {
         setError("Invalid email or password");
