@@ -106,11 +106,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setToken(jwtToken);
       await fetchUser();
       toast.success("Login successful");
-    } catch (error) {
-      toast.error("Login failed");
-      console.error(error);
-      throw new Error("Login failed");
-    } 
+    } catch (error: any) {
+      console.error("Login error:", error);
+
+      // Check if it's a 500 error or email not found error
+      if (error.response?.status === 500 ||
+          error.message.includes("500") ||
+          error.response?.data?.message?.includes("not found") ||
+          error.response?.data?.message?.includes("does not exist")) {
+        toast.error("Email not found. Please sign up first.");
+        throw new Error("EMAIL_NOT_FOUND");
+      } else if (error.response?.status === 401 || error.response?.status === 403) {
+        toast.error("Invalid email or password");
+        throw new Error("INVALID_CREDENTIALS");
+      } else {
+        toast.error("Login failed");
+        throw new Error("LOGIN_FAILED");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const signup = async (username: string, email: string, password: string) => {
