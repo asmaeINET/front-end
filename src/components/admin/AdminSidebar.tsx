@@ -44,6 +44,11 @@ const sidebarItems = [
     href: "/admin/support",
     icon: MessageSquare,
   },
+  {
+    title: "Profile",
+    href: "/admin/profile",
+    icon: User,
+  },
 ];
 
 const AdminSidebar = () => {
