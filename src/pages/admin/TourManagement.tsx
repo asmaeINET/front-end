@@ -534,117 +534,141 @@ const TourManagement = () => {
 
         {/* Tours Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTours.length ? (
-            filteredTours.map((tour) => (
-              <Card key={tour.id} className="overflow-hidden">
-                <div className="relative">
-                  <img
-                    src={tour.mainImage}
-                    alt={tour.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <Badge
-                    className="absolute top-2 right-2"
-                    variant={
-                      tour.status === "ACTIVE"
-                        ? "default"
-                        : tour.status === "INACTIVE"
-                          ? "destructive"
-                          : "secondary"
+          {filteredTours.map((tour) => (
+            <Card key={tour.id} className="overflow-hidden">
+              <div className="relative">
+                <img
+                  src={tour.mainImage}
+                  alt={tour.title}
+                  className="w-full h-48 object-cover"
+                />
+                <Badge
+                  className="absolute top-2 right-2"
+                  variant={
+                    tour.status === "ACTIVE"
+                      ? "default"
+                      : tour.status === "INACTIVE"
+                        ? "destructive"
+                        : "secondary"
+                  }
+                >
+                  {tour.status}
+                </Badge>
+              </div>
+              <CardContent className="p-4">
+                <h3 className="font-semibold text-lg mb-2">{tour.title}</h3>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                  {tour.description}
+                </p>
+
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="h-4 w-4" />
+                    {tour.location}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Calendar className="h-4 w-4" />
+                    {tour.date}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Users className="h-4 w-4" />
+                    Max {tour.capacity} people
+                  </div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-gray-900">
+                    <DollarSign className="h-4 w-4" />${tour.price}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => openEditModal(tour)}
+                  >
+                    <Edit className="h-4 w-4 mr-1" />
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteTour(tour.id)}
+                    className="flex-1 text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
+                  >
+                    <Trash2 className="h-4 w-4 mr-1" />
+                    Delete
+                  </Button>
+                </div>
+                <div className="mt-4 flex">
+                  <Button
+                    variant="outline"
+                    className="h-20 flex  gap-2 w-full"
+                    onClick={() => navigate(`/admin/tours/${tour.id}/gallery`)}
+                  >
+                    <Image className="h-6 w-6" />
+                    Manage Gallery
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    className="h-20 flex flex-col gap-2 w-full"
+                    onClick={() => navigate(`/admin/tours/${tour.id}/edit-details`)}
+                  >
+                    <Edit className="h-6 w-6" />
+                    Edit Details
+                  </Button>
+                </div>
+
+
+                <div className="mt-4">
+                  <Select
+                    value={tour.status}
+                    onValueChange={(value) =>
+                      handleStatusChange(tour.id, value as Tour["status"])
                     }
                   >
-                    {tour.status}
-                  </Badge>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ACTIVE">Active</SelectItem>
+                      <SelectItem value="INACTIVE">Inactive</SelectItem>
+                      <SelectItem value="DRAFT">Draft</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">{tour.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {tour.description}
-                  </p>
-
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="h-4 w-4" />
-                      {tour.location}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Calendar className="h-4 w-4" />
-                      {tour.date}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Users className="h-4 w-4" />
-                      Max {tour.capacity} people
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-semibold text-gray-900">
-                      <DollarSign className="h-4 w-4" />${tour.price}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => openEditModal(tour)}
-                    >
-                      <Edit className="h-4 w-4 mr-1" />
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleDeleteTour(tour.id)}
-                      className="flex-1 text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
-                    >
-                      <Trash2 className="h-4 w-4 mr-1" />
-                      Delete
-                    </Button>
-                  </div>
-                  <div className="mt-4 flex">
-                    <Button
-                      variant="outline"
-                      className="h-20 flex  gap-2 w-full"
-                      onClick={() => navigate(`/admin/tours/${tour.id}/gallery`)}
-                    >
-                      <Image className="h-6 w-6" />
-                      Manage Gallery
-                    </Button>
-
-                    <Button
-                      variant="outline"
-                      className="h-20 flex flex-col gap-2 w-full"
-                      onClick={() => navigate(`/admin/tours/${tour.id}/edit-details`)}
-                    >
-                      <Edit className="h-6 w-6" />
-                      Edit Details
-                    </Button>
-                  </div>
-
-
-                  <div className="mt-4">
-                    <Select
-                      value={tour.status}
-                      onValueChange={(value) =>
-                        handleStatusChange(tour.id, value as Tour["status"])
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ACTIVE">Active</SelectItem>
-                        <SelectItem value="INACTIVE">Inactive</SelectItem>
-                        <SelectItem value="DRAFT">Draft</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">No tours found.</p>
-          )}
+              </CardContent>
+            </Card>
+          ))}
         </div>
+
+        {/* Empty State */}
+        {filteredTours.length === 0 && (
+          <div className="col-span-full text-center py-12">
+            <div className="max-w-md mx-auto">
+              <div className="w-16 h-16 mx-auto mb-4 text-gray-300">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                  <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                No tours found
+              </h3>
+              <p className="text-gray-600">
+                {searchQuery
+                  ? "No tours match your search criteria. Try adjusting your search or filters."
+                  : "No tours have been created yet. Click 'Create Tour' to add your first tour package."
+                }
+              </p>
+              {!searchQuery && (
+                <Button onClick={openCreateModal} className="mt-4">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Your First Tour
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );
