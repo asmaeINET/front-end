@@ -193,6 +193,14 @@ const Header = () => {
                 {showAccountMenu && (
                   <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-3xl shadow-lg border border-gray-200 py-0 z-50">
                     <Link
+                      to="/profile"
+                      className="flex items-center gap-2 px-6 py-4 text-gray-900 hover:bg-gray-50 border-b border-gray-300"
+                      onClick={() => setShowAccountMenu(false)}
+                    >
+                      <User className="w-6 h-6 opacity-80" />
+                      <span className="font-open-sans text-lg">Profile</span>
+                    </Link>
+                    <Link
                       to="/account"
                       className="flex items-center gap-2 px-6 py-4 text-gray-900 hover:bg-gray-50 border-b border-gray-300"
                       onClick={() => setShowAccountMenu(false)}
