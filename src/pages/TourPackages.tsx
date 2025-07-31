@@ -64,76 +64,95 @@ const TourPackages = () => {
       {/* Tour Packages Grid */}
       <section className="py-16 bg-gray-50 mx-auto">
         <div className="container mx-auto px-4 max-w-[1920px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {destinations.map((tour) => (
-              <Card
-                key={tour.id}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
-                onClick={() => navigateToDetails(tour)}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={tour.mainImage}
-                    alt={tour.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600">
-                    from {tour.price}
-                  </Badge>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-bold text-lg mb-2">{tour.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {tour.description}
-                  </p>
+          {destinations.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {destinations.map((tour) => (
+                <Card
+                  key={tour.id}
+                  className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
+                  onClick={() => navigateToDetails(tour)}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={tour.mainImage}
+                      alt={tour.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600">
+                      from {tour.price}
+                    </Badge>
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-bold text-lg mb-2">{tour.title}</h3>
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                      {tour.description}
+                    </p>
 
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <span>⏱️ {tour.duration}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <span>👥 {tour.capacity}</span>
-                    </div>
-                    <div className="flex items-center text-sm">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(4)
-                                ? "text-yellow-400 fill-current"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                        <span className="ml-1 text-gray-600">
-                          {4.5} (96 reviews)
-                        </span>
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center text-sm text-gray-500">
+                        <span>⏱️ {tour.duration}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-500">
+                        <span>👥 {tour.capacity}</span>
+                      </div>
+                      <div className="flex items-center text-sm">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < Math.floor(4)
+                                  ? "text-yellow-400 fill-current"
+                                  : "text-gray-300"
+                              }`}
+                            />
+                          ))}
+                          <span className="ml-1 text-gray-600">
+                            {4.5} (96 reviews)
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-orange-500">
-                      {tour.price} €
-                    </span>
-                    <Link
-        to={`/tour/${tour.title.toLowerCase().replace(/\s+/g, "-")}`}
-        className="inline-block"
-      >
-        <Button
-          variant="outline"
-          size="sm"
-          className="text-orange-500 border-orange-500 hover:bg-orange-50"
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-orange-500">
+                        {tour.price} €
+                      </span>
+                      <Link
+          to={`/tour/${tour.title.toLowerCase().replace(/\s+/g, "-")}`}
+          className="inline-block"
         >
-          Read More →
-        </Button>
-      </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-orange-500 border-orange-500 hover:bg-orange-50"
+          >
+            Read More →
+          </Button>
+        </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="max-w-md mx-auto">
+                <div className="w-16 h-16 mx-auto mb-4 text-gray-300">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                    <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Aucun tour disponible
+                </h3>
+                <p className="text-gray-600">
+                  Il n'y a actuellement aucun tour actif disponible.
+                  Revenez bientôt pour découvrir nos prochaines aventures !
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
