@@ -109,14 +109,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error: any) {
       console.error("Login error:", error);
 
-      // Check if it's a 500 error or email not found error
-      if (error.response?.status === 500 ||
-          error.message.includes("500") ||
-          error.response?.data?.message?.includes("not found") ||
-          error.response?.data?.message?.includes("does not exist")) {
+      // More specific error handling
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message?.toLowerCase() || "";
+      const errorDetails = error.message?.toLowerCase() || "";
+
+      // Check if it's likely an email not found error (500 usually means user doesn't exist in this context)
+      if (statusCode === 500 ||
+          errorMessage.includes("not found") ||
+          errorMessage.includes("does not exist") ||
+          errorMessage.includes("user not found") ||
+          errorDetails.includes("500")) {
         toast.error("Email not found. Please sign up first.");
         throw new Error("EMAIL_NOT_FOUND");
-      } else if (error.response?.status === 401 || error.response?.status === 403) {
+      } else if (statusCode === 401 || statusCode === 403) {
         toast.error("Invalid email or password");
         throw new Error("INVALID_CREDENTIALS");
       } else {
