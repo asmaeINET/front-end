@@ -137,22 +137,11 @@ const TourPackages = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <div className="max-w-md mx-auto">
-                <div className="w-16 h-16 mx-auto mb-4 text-gray-300">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-                    <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Aucun tour disponible
-                </h3>
-                <p className="text-gray-600">
-                  Il n'y a actuellement aucun tour actif disponible.
-                  Revenez bientôt pour découvrir nos prochaines aventures !
-                </p>
-              </div>
-            </div>
+            <EmptyState
+              variant="tours"
+              title="Nouvelles aventures en préparation"
+              description="Nos guides travaillent actuellement sur de nouvelles expériences extraordinaires. Revenez bientôt pour découvrir nos prochaines aventures en Toscane !"
+            />
           )}
         </div>
       </section>
