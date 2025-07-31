@@ -161,6 +161,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const updateProfile = async (data: Partial<User>) => {
+    setIsLoading(true);
+    try {
+      const response = await api.put("/auth/profile", data);
+      const updatedUser = {
+        ...user!,
+        ...response.data,
+      };
+      setUser(updatedUser);
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      toast.error("Failed to update profile");
+      throw new Error("Profile update failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const changePassword = async (currentPassword: string, newPassword: string) => {
+    setIsLoading(true);
+    try {
+      await api.put("/auth/change-password", {
+        currentPassword,
+        newPassword,
+      });
+      toast.success("Password changed successfully");
+    } catch (error) {
+      toast.error("Failed to change password");
+      throw new Error("Password change failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("JWT_TOKEN");
     localStorage.removeItem("IS_ADMIN");
