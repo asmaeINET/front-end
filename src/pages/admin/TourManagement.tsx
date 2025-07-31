@@ -645,29 +645,18 @@ const TourManagement = () => {
 
         {/* Empty State */}
         {filteredTours.length === 0 && (
-          <div className="col-span-full text-center py-12">
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-4 text-gray-300">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-                  <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No tours found
-              </h3>
-              <p className="text-gray-600">
-                {searchQuery
+          <div className="col-span-full">
+            <EmptyState
+              variant="admin"
+              title={searchQuery ? "No matching tours" : "Create your first tour"}
+              description={
+                searchQuery
                   ? "No tours match your search criteria. Try adjusting your search or filters."
-                  : "No tours have been created yet. Click 'Create Tour' to add your first tour package."
-                }
-              </p>
-              {!searchQuery && (
-                <Button onClick={openCreateModal} className="mt-4">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create Your First Tour
-                </Button>
-              )}
-            </div>
+                  : "Start building your tour collection by creating your first amazing tour package."
+              }
+              actionText={!searchQuery ? "Create Your First Tour" : undefined}
+              onAction={!searchQuery ? openCreateModal : undefined}
+            />
           </div>
         )}
       </div>
