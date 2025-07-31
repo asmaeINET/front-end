@@ -82,12 +82,12 @@ const AuthModal = ({
       console.log("Login error in modal:", error.message);
 
       if (error.message === "EMAIL_NOT_FOUND") {
-        // Automatically switch to signup modal
-        setError("Email not found. Redirecting to signup...");
+        // Show helpful message and redirect to signup
+        setError("This email doesn't exist. You'll be redirected to sign up in 3 seconds, or click 'Sign Up' below.");
         setTimeout(() => {
           onModalTypeChange("signup");
           setError(""); // Clear error when switching to signup
-        }, 2000);
+        }, 3000);
       } else if (error.message === "INVALID_CREDENTIALS") {
         setError("Invalid email or password");
       } else {
