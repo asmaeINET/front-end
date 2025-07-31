@@ -60,7 +60,7 @@ const Profile = () => {
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast.error("New passwords don't match");
       return;
@@ -72,18 +72,16 @@ const Profile = () => {
     }
 
     setLoading(true);
-    
+
     try {
-      // TODO: API call to change password
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      toast.success("Password changed successfully!");
+      await changePassword(passwordData.currentPassword, passwordData.newPassword);
       setPasswordData({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
       });
     } catch (error) {
-      toast.error("Failed to change password");
+      // Error handling is done in the context
     } finally {
       setLoading(false);
     }
