@@ -69,22 +69,11 @@ const SearchResults = () => {
 
                 {/* Empty State */}
                 {searchResults.length === 0 && (
-                  <div className="text-center py-12">
-                    <div className="max-w-md mx-auto">
-                      <div className="w-16 h-16 mx-auto mb-4 text-gray-300">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        Aucun tour trouvé
-                      </h3>
-                      <p className="text-gray-600">
-                        Aucun résultat ne correspond à vos critères de recherche.
-                        Essayez de modifier vos filtres ou votre recherche.
-                      </p>
-                    </div>
-                  </div>
+                  <EmptyState
+                    variant="search"
+                    title="Explorez d'autres possibilités"
+                    description="Nous n'avons pas trouvé de tours correspondant à vos critères. Essayez de modifier votre recherche ou découvrez nos autres destinations fantastiques !"
+                  />
                 )}
               </>
             )}
